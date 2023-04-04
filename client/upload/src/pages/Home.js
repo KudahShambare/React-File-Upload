@@ -34,6 +34,7 @@ const [imageList,setImageList] = useState([]);
 				})
 			})
 		 			tempArr = imageList.concat(tempArr);
+		 			console.log(tempArr);
 		 			setImageList(tempArr)
 		 			
 		 		})
@@ -43,7 +44,7 @@ const [imageList,setImageList] = useState([]);
 
 useEffect(()=>{
 	allImages();
-},[imageList])
+},[])
 
 
 
@@ -56,8 +57,9 @@ const fileChanged = (e)=>{
 
 	setFile(e.target.files[0]);
 	setFilename(e.target.files[0].name)
-	
+
 }
+
 
 
 
@@ -72,17 +74,18 @@ const fileChanged = (e)=>{
 			
 		}
 		else{
-
+console.log(file.type)
 		const formData = new FormData();
 		formData.append("file",file);
 
 			setToUpload(formData);
 
-	}
+	
 
 
 	//firebase logic
-
+//get file extension
+			const ext = filename.split(".")[1];
 
 	//firebase storage path and name
 let randomName = uuidv4(); 
@@ -91,14 +94,15 @@ let randomName = uuidv4();
 
 	const storageRef = ref(storage,path);
 	
-uploadBytes(storageRef, toUpload).then((resp) => {
-  console.log('Uploaded a blob or file!');
-  //allImages();
+uploadBytes(storageRef, toUpload,{contentType:`image/${ext}`}).then((resp) => {
+  alert("File successfully uploaded");
+  window.location.reload();
+  
 })
 
 
 
-
+}
 
 
 		}
@@ -116,8 +120,8 @@ uploadBytes(storageRef, toUpload).then((resp) => {
  </form>
  <div id="images">
  </div>
- {imageList.map(pic=>{
- 	return <img src={pic} alt=""/>
+ {imageList.map((pic,index)=>{
+ 	return <img src={pic} alt="" key={index}/>
  })}
 	</main>
 }

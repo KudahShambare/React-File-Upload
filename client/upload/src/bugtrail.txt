@@ -1,0 +1,8 @@
+04/04/23
+
+images rendering after clicking the upload button 
+images not displaying -- images were saved as octet-stream(partially resolved)
+
+05/04/23
+
+firebase images are just thumbnails
